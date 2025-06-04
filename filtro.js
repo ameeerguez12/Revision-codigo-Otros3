@@ -1,63 +1,47 @@
 // Tenemos un li de productos
-
+//Agregué todas las imágenes a mi nueva carpeta de public y modifique la ruta de cada una 
 const productos = [
-  {nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg"},
-  {nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg"},
-  {nombre: "Bota negra", tipo: "bota", color: "negro", img: "./bota-negra.jpg"},
-  {nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg"},
-  {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
-]
+  { nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./public/taco-negro.jpg" },
+  { nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./public/taco-azul.jpg" },
+  { nombre: "Bota negra", tipo: "bota", color: "negro", img: "./public/bota-negra.jpg" },     
+  { nombre: "Bota azul", tipo: "bota", color: "azul", img: "./public/bota-azul.jpg" },
+  { nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./public/zapato-rojo.jpg" }
+];
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
+const li = document.getElementById("lista-de-productos");    //	cambie el getElementsByName po ID ya que no  encuentra el div porque getElementsByName busca por name, no por id.
+const $i = document.querySelector("input"); // Se agrega correctamente la  class="input" 
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
+function displayProductos(lista) {        //Creé la función displayProductos(lista) y puse dentro de ella el código que genera los productos dinámicamente.
+  li.innerHTML = "";
+  for (let i = 0; i < lista.length; i++) {
+    const d = document.createElement("div");
+    d.classList.add("producto");
 
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
-  
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+    const ti = document.createElement("p");
+    ti.classList.add("titulo");
+    ti.textContent = lista[i].nombre;
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
+    const imagen = document.createElement("img");     //Cambie var por const para evitar problemas de scope.
+    imagen.setAttribute("src", lista[i].img);
 
-  li.appendChild(d)
+    d.appendChild(ti);
+    d.appendChild(imagen);
+    li.appendChild(d);
+  }
 }
 
-displayProductos(productos)
+displayProductos(productos);                             // Moví el bloque a la función displayProductos() y llamé esa función al inicio y dentro del botón
+
 const botonDeFiltro = document.querySelector("button");
 
-botonDeFiltro.onclick = function() {
-  while (li.firstChild) {
-    li.removeChild(li.firstChild);
-  }
-
-  const texto = $i.value;
-  console.log(texto);
-  const productosFiltrados = filtrado(productos, texto );
-
-  for (let i = 0; i < productosFiltrados.length; i++) {
-    var d = document.createElement("div")
-    d.classList.add("producto")
-  
-    var ti = document.createElement("p")
-    ti.classList.add("titulo")
-    ti.textContent = productosFiltrados[i].nombre
-    
-    var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
-  
-    d.appendChild(ti)
-    d.appendChild(imagen)
-  
-    li.appendChild(d)
-  }
-}
+botonDeFiltro.onclick = function () {
+  const texto = $i.value.trim().toLowerCase();          //  Le agregué .trim().toLowerCase() para evitar errores por espacios o mayúsculas.
+  const productosFiltrados = filtrado(productos, texto);
+  displayProductos(productosFiltrados);
+};
 
 const filtrado = (productos = [], texto) => {
-  return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
-}  
+  return productos.filter(item =>
+    item.tipo.includes(texto) || item.color.includes(texto)
+  );
+};

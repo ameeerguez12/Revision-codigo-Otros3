@@ -1,24 +1,57 @@
-input {
-  width: 500px;
-  height: 40px;
-  font-size: 18px;
+
+* {
+  box-sizing: border-box; 
+  margin: 0;              /* Quité márgenes por defecto que a veces empujan todo sin que te des cuenta */
+  padding: 0;
+  font-family: sans-serif; /* Quise usar una fuente más limpia y moderna */
+  color: #333;            /* Cambié el color del texto a un gris oscuro para que sea más fácil de leer */
+  background-color: #f9f9f9; /* Le puse un fondo claro a toda la página para que se vea más amigable */
 }
+
+
+/* Le di un poco de aire a toda la página para que no esté pegada a los bordes */
+body {
+  padding: 20px; 
+}
+
+
+input {
+  width: 500px;       
+  height: 40px;       
+  font-size: 18px;    
+  padding: 0 10px;       /* Le puse padding al input para que el texto no se vea pegado a la orilla */
+  margin-bottom: 20px;   /* Separé el input de la lista de productos */
+}
+
 
 #lista-de-productos {
-  display: flex
+  display: flex;        
+  flex-wrap: wrap;       /* Le agregué esta propiedad para que los productos se acomoden en varias filas si no caben */
+  gap: 15px;             /* Cambié los márgenes individuales por gap, que es más limpio para separar elementos en flexbox */
+    margin-top: 20px;    /* separe el texto de la lista de productos */
 }
+
 
 .producto {
-  width: 200px;
-  height: 200px;
-  margin: 10px;
-  border: 2px solid black;
+  width: 200px;            
+  padding: 10px;           /* Le añadí un poco de espacio interior para que el contenido respire */
+  border: 2px solid #ccc;  /* Reemplacé el borde negro por uno gris para que se vea más suave */
+  border-radius: 10px;     /* Le puse bordes redondeados para que tenga un look más moderno */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column;  
+  align-items: center;     
+  transition: transform 0.2s ease; /* Agregué una animación suave para cuando pasas el mouse encima */
 }
 
+
+.producto:hover {
+  transform: scale(1.05);  /* Quise que al pasar el mouse, el producto se agrande un poquito */
+  border-color: #333;      /* También cambio el color del borde al hacer hover, para que destaque */
+}
+
+
 .producto img {
-  width: 70%;
-  height: auto
+  width: 70%;         
+  height: auto;       
+  border-radius: 6px; /* Le redondeé las esquinas a la imagen para que combine con la tarjeta */
 }
